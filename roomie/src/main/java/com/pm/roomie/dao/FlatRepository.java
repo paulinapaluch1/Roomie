@@ -9,9 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FlatMemberRepository extends JpaRepository<FlatMember,Long> {
+public interface FlatRepository extends JpaRepository<Flat,Long> {
 
-    List<FlatMember> findByUser(User user);
 
-    List<FlatMember> findByFlat(Flat flat);
+
 }
