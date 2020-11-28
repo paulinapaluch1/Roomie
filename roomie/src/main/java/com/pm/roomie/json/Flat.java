@@ -1,5 +1,6 @@
 package com.pm.roomie.json;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -17,5 +18,10 @@ public class Flat {
     private int id;
 
     @OneToMany(mappedBy = "id")
+    @JsonIgnore
     List<FlatMember> flatMemberList;
+    
+    @OneToMany(mappedBy = "id")
+    @JsonIgnore
+    List<Bill> billList;
 }
