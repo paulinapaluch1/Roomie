@@ -2,9 +2,7 @@ package com.pm.roomie.controller;
 
 
 import com.pm.roomie.dao.FlatMemberRepository;
-import com.pm.roomie.dao.FlatRepository;
 import com.pm.roomie.dao.UserRepository;
-import com.pm.roomie.json.Flat;
 import com.pm.roomie.json.FlatMember;
 import com.pm.roomie.json.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,6 @@ public class MobileController {
 
     @Autowired
     FlatMemberRepository flatMemberRepository;
-    @Autowired
-    FlatRepository flatRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -57,7 +53,7 @@ public class MobileController {
         for(FlatMember m :flatMembersList){
             User user1 = userRepository.findUserById(m.getUser().getId());
             if(user1.isActive() && user1.getId()!=user.getId()){
-            flatmates.add(user1);
+                flatmates.add(user1);
             }
         }
         for (User u: flatmates ) {

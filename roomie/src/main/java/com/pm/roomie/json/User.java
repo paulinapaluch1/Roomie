@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name="users")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-
 public class User {
 
    @Id
