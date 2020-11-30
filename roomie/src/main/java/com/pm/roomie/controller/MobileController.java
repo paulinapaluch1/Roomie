@@ -7,7 +7,6 @@ import com.pm.roomie.dao.FlatRepository;
 import com.pm.roomie.dao.UserRepository;
 import com.pm.roomie.json.FlatMember;
 import com.pm.roomie.json.User;
-import com.pm.roomie.json.Flat;
 import com.pm.roomie.json.Bill;
 import com.pm.roomie.json.BillType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +33,7 @@ public class MobileController {
     
     @Autowired
     PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    public MobileController(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+
 
     @GetMapping("/hello")
     public String hello() {
@@ -96,4 +91,45 @@ public class MobileController {
         return true;
     }
 
+
+    @PostMapping("saveUser")
+    public Boolean saveUser(@RequestBody User user) {
+        User userDb = userRepository.findByLogin(user.getLogin());
+        if(userDb == null){
+            user.setActive(true);
+            user.setRoles("user");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+
+    @GetMapping("getUserById/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        User user = userRepository.findUserById(id);
+        return user;
+    }
+
+    @PostMapping("updateUser")
+    public Boolean updateUser(@RequestBody User user) {
+        User userDb = userRepository.findByLogin(user.getLogin());
+        if(userDb == null){
+            return false;
+        }else{
+            userDb.setLogin(user.getLogin());
+            userDb.setPhone(user.getPhone());
+            userDb.setName(user.getName());
+            userDb.setSurname(user.getSurname());
+            if(user.getPassword() != null){
+                userDb.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            userRepository.save(userDb);
+            return true;
+        }
+
+    }
 }

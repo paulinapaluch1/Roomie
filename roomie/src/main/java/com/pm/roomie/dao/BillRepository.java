@@ -14,8 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface BillRepository extends JpaRepository<Bill,Long> {
     
     List<Bill> findByFlat(Flat flat);
-    
-//    List<FlatMember> findFlatMembersByFlatId();
+
     
     @Query("SELECT b FROM Bill b "  + "WHERE b.id = :id ")
     Bill findBillById(Integer id);
