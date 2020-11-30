@@ -5,10 +5,7 @@ import com.pm.roomie.dao.BillRepository;
 import com.pm.roomie.dao.FlatMemberRepository;
 import com.pm.roomie.dao.FlatRepository;
 import com.pm.roomie.dao.UserRepository;
-import com.pm.roomie.json.FlatMember;
-import com.pm.roomie.json.User;
-import com.pm.roomie.json.Bill;
-import com.pm.roomie.json.BillType;
+import com.pm.roomie.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -92,13 +89,17 @@ public class MobileController {
     }
 
 
-    @PostMapping("saveUser")
-    public Boolean saveUser(@RequestBody User user) {
+    @PostMapping("saveUser/{flatId}")
+    public Boolean saveUser(@RequestBody User user,@PathVariable Integer flatId) {
         User userDb = userRepository.findByLogin(user.getLogin());
         if(userDb == null){
             user.setActive(true);
             user.setRoles("user");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            FlatMember flatMember = new FlatMember();
+            flatMember.setUser(user);
+            flatMember.setFlat(flatRepository.findFlatById(flatId));
+            flatMemberRepository.save(flatMember);
             userRepository.save(user);
             return true;
         }else{
