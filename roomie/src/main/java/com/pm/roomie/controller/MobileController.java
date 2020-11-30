@@ -99,8 +99,9 @@ public class MobileController {
             FlatMember flatMember = new FlatMember();
             flatMember.setUser(user);
             flatMember.setFlat(flatRepository.findFlatById(flatId));
-            flatMemberRepository.save(flatMember);
             userRepository.save(user);
+           // flatMemberRepository.save(flatMember);
+
             return true;
         }else{
             return false;
