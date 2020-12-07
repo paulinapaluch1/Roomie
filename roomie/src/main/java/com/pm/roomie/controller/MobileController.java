@@ -2,10 +2,18 @@ package com.pm.roomie.controller;
 
 
 import com.pm.roomie.dao.BillRepository;
+import com.pm.roomie.dao.BillTypeRepository;
 import com.pm.roomie.dao.FlatMemberRepository;
 import com.pm.roomie.dao.FlatRepository;
+import com.pm.roomie.dao.MembersBillRepository;
 import com.pm.roomie.dao.UserRepository;
 import com.pm.roomie.json.*;
+import com.pm.roomie.json.FlatMember;
+import com.pm.roomie.json.MembersBill;
+import com.pm.roomie.json.User;
+import com.pm.roomie.json.Flat;
+import com.pm.roomie.json.Bill;
+import com.pm.roomie.json.BillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +34,13 @@ public class MobileController {
     BillRepository billRepository;
     
     @Autowired
+    BillTypeRepository billTypeRepository;
+    
+    @Autowired
     FlatRepository flatRepository;
+    
+    @Autowired
+    MembersBillRepository membersBillRepository;
     
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -79,7 +93,68 @@ public class MobileController {
         return billsList;
     }
     
+    @GetMapping("getBillsDetails/{id}")
+    public Bill getBillsDetails(@PathVariable Integer id) {
 
+        Bill bill = billRepository.findBillById(id);
+        
+        return bill;
+    }
+    
+    @GetMapping("getUserBills/{userId}")
+    public List<MembersBill> getUserBills(@PathVariable Integer userId) {
+        User user = userRepository.findUserById(userId);
+        FlatMember member = flatMemberRepository.findByUser(user).get(0);
+        List<MembersBill> membersBillsList = membersBillRepository.findByFlatMember(member);
+        
+        return membersBillsList;
+    }
+    
+    
+    @PostMapping("saveBill")
+    public Boolean saveBill(@RequestBody Bill bill) {
+
+        Bill billDb = billRepository.findBillById(bill.getId());
+
+        if(billDb == null){
+//            do poprawy!!!!
+//            billDb.setFlat(flatRepository.findFlatById(1));
+//            billDb.setBillType(billTypeRepository.findBillTypeById(1));
+//            billDb.setFlat(null);
+//            billDb.setBillType(null);
+            billRepository.save(bill);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    
+    @GetMapping("getBillById/{id}")
+    public Bill getBillById(@PathVariable Integer id) {
+        Bill bill = billRepository.findBillById(id);
+        
+        return bill;
+    }
+
+    @PostMapping("updateBill")
+    public Boolean updateBill(@RequestBody Bill bill) {
+        Bill billDb = billRepository.findBillById(bill.getId());
+        if(billDb == null){
+            return false;
+        }else{
+            billDb.setBillType(bill.getBillType());
+            billDb.setAmount(bill.getAmount());
+            billDb.setFlat(bill.getFlat());
+            billDb.setBillDate(bill.getBillDate());
+            billDb.setComment(bill.getComment());
+            
+            billRepository.save(billDb);
+            return true;
+        }
+
+    }
+    
     @PostMapping("archive/{id}")
     public Boolean archiveUser(@PathVariable Integer id) {
         User user = userRepository.findUserById(id);
