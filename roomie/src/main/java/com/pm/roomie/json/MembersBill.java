@@ -10,35 +10,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name="bills")
+@Table(name="membersbills")
 @Data
-public class Bill {
+public class MembersBill {
+    
     @Id
     private int id;
     
     @ManyToOne(cascade = { CascadeType.DETACH })
     @JsonIgnore 
-    @JoinColumn(name = "billstype_id")
-    private BillType billType;
+    @JoinColumn(name = "bills_id")
+    private Bill bill;
     
-    private float amount;
+    private float dividedamount;
+    
+    private boolean paid;
     
     @ManyToOne(cascade = { CascadeType.DETACH })
     @JsonIgnore
-    @JoinColumn(name = "flat_id")
-    private Flat flat;
-    
-    @Column(name="date")
-    private String billDate;
-    
-    private String comment;
-    
-    @OneToMany(mappedBy = "id")
-    List<MembersBill> membersBillList;
+    @JoinColumn(name = "flatmembers_id")
+    private FlatMember flatMember;
     
 }

@@ -1,6 +1,7 @@
 package com.pm.roomie.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,11 +20,13 @@ public class FlatMember {
     @JoinColumn(name = "user_id")
     private User user;
 
-   @ManyToOne(cascade = { CascadeType.DETACH })
-   @JoinColumn(name = "flat_id")
+    @ManyToOne(cascade = { CascadeType.DETACH })
+    @JoinColumn(name = "flat_id")
     @JsonIgnore
-   private Flat flat;
-
+    private Flat flat;
+    
+    @OneToMany(mappedBy = "id")
+    List<MembersBill> membersBillList;
 
 
 }
