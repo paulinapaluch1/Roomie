@@ -14,12 +14,12 @@ public class FlatMember {
    @Id
    private int id;
 
-    @ManyToOne(cascade = { CascadeType.DETACH })
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
-   @ManyToOne(cascade = { CascadeType.DETACH })
+   @ManyToOne(cascade = CascadeType.PERSIST)
    @JoinColumn(name = "flat_id")
     @JsonIgnore
    private Flat flat;

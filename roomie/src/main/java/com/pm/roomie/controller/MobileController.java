@@ -31,12 +31,6 @@ public class MobileController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello world";
-    }
-
     @GetMapping("login/{username}/{password}")
     public User loginToMobileApp(@PathVariable String username, @PathVariable("password") String password) {
        User user = userRepository.findByLogin(username);
@@ -97,10 +91,11 @@ public class MobileController {
             user.setRoles("user");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             FlatMember flatMember = new FlatMember();
-            flatMember.setUser(user);
-            flatMember.setFlat(flatRepository.findFlatById(flatId));
+
             userRepository.save(user);
-           // flatMemberRepository.save(flatMember);
+            flatMember.setUser(user);
+            flatMember.setFlat(flatRepository.findFlatById(1));
+            flatMemberRepository.save(flatMember);
 
             return true;
         }else{
