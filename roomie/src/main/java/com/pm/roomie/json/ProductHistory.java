@@ -3,6 +3,8 @@ package com.pm.roomie.json;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="producthistory")
@@ -17,8 +19,11 @@ public class ProductHistory {
     private Product product;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "flatmember_id")
+    @JoinColumn(name = "flatmembers_id")
     private FlatMember flatMember;
+
+    @Column(name="date")
+    private Date date;
 
 
 }

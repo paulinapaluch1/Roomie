@@ -54,7 +54,6 @@ public class MobileController {
         }else{
            return new User();
         }
-
     }
 
     @GetMapping("getFlatmates/{userId}")
