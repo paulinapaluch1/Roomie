@@ -6,7 +6,9 @@ import com.pm.roomie.dao.BillTypeRepository;
 import com.pm.roomie.dao.FlatMemberRepository;
 import com.pm.roomie.dao.FlatRepository;
 import com.pm.roomie.dao.MembersBillRepository;
+import com.pm.roomie.dao.TimetableRepository;
 import com.pm.roomie.dao.UserRepository;
+import com.pm.roomie.dtos.TimetableObject;
 import com.pm.roomie.json.*;
 import com.pm.roomie.json.FlatMember;
 import com.pm.roomie.json.MembersBill;
@@ -45,6 +47,9 @@ public class MobileController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    TimetableRepository timetableRepository;
+        
     @GetMapping("login/{username}/{password}")
     public User loginToMobileApp(@PathVariable String username, @PathVariable("password") String password) {
        User user = userRepository.findByLogin(username);
@@ -202,5 +207,5 @@ public class MobileController {
             return true;
         }
 
-    }
+    }    
 }
