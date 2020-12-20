@@ -24,4 +24,8 @@ public class Flat {
     @OneToMany(mappedBy = "id")
     @JsonIgnore
     List<Bill> billList;
+    
+    @OneToMany(mappedBy = "id")
+    List<Room> roomList;
+
 }
