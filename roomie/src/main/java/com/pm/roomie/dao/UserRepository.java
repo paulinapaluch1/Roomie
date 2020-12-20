@@ -7,14 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
-
-
+public interface UserRepository extends JpaRepository<User,Integer> {
     User findByLogin(String username);
 
     @Query("SELECT p FROM User p "  + "WHERE p.id = :id ")
     User findUserById(Integer id);
-
 
     @Query("SELECT h FROM User h "
             + "JOIN FlatMember f ON h.id = f.user "

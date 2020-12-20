@@ -20,7 +20,7 @@ public class FlatMember {
     @JoinColumn(name = "user_id")
     private User user;
 
-   @ManyToOne(cascade = CascadeType.DETACH)
+   @ManyToOne(cascade = CascadeType.REMOVE)
    @JoinColumn(name = "flat_id")
     @JsonIgnore
     private Flat flat;
@@ -28,5 +28,10 @@ public class FlatMember {
     @OneToMany(mappedBy = "id")
     List<MembersBill> membersBillList;
 
+    @OneToMany(mappedBy = "id")
+    List<ProductHistory> productHistoryList;
+
+    @OneToMany(mappedBy = "id")
+    List<Checklist> checklists;
 
 }

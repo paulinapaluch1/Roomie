@@ -18,7 +18,7 @@ public class ProductHistory {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "flatmembers_id")
     private FlatMember flatMember;
 
