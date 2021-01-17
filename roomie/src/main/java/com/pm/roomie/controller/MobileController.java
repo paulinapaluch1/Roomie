@@ -79,79 +79,8 @@ public class MobileController {
         }
         return flatmates;
     }
-    
-    @GetMapping("getBills/{userId}")
-    public List<Bill> getBills(@PathVariable Integer userId) {
-        User user = userRepository.findUserById(userId);
-        FlatMember member = flatMemberRepository.findByUser(user).get(0);
-        List<Bill> billsList = billRepository.findByFlat(member.getFlat());
-        
-        BillType billType;
-        
-        return billsList;
-    }
-    
-    @GetMapping("getBillsDetails/{id}")
-    public Bill getBillsDetails(@PathVariable Integer id) {
-
-        Bill bill = billRepository.findBillById(id);
-        
-        return bill;
-    }
-    
-    @GetMapping("getUserBills/{userId}")
-    public List<MembersBill> getUserBills(@PathVariable Integer userId) {
-        User user = userRepository.findUserById(userId);
-        FlatMember member = flatMemberRepository.findByUser(user).get(0);
-        List<MembersBill> membersBillsList = membersBillRepository.findByFlatMember(member);
-        
-        return membersBillsList;
-    }
-    
-    
-    @PostMapping("saveBill")
-    public Boolean saveBill(@RequestBody Bill bill) {
-
-        Bill billDb = billRepository.findBillById(bill.getId());
-
-        if(billDb == null){
-//            do poprawy!!!!
-//            billDb.setFlat(flatRepository.findFlatById(1));
-//            billDb.setBillType(billTypeRepository.findBillTypeById(1));
-//            billDb.setFlat(null);
-//            billDb.setBillType(null);
-            billRepository.save(bill);
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-    
-    @GetMapping("getBillById/{id}")
-    public Bill getBillById(@PathVariable Integer id) {
-        Bill bill = billRepository.findBillById(id);
-        
-        return bill;
-    }
-
-    @PostMapping("updateBill")
-    public Boolean updateBill(@RequestBody Bill bill) {
-        Bill billDb = billRepository.findBillById(bill.getId());
-        if(billDb == null){
-            return false;
-        }else{
-            billDb.setBillType(bill.getBillType());
-            billDb.setAmount(bill.getAmount());
-            billDb.setFlat(bill.getFlat());
-            billDb.setBillDate(bill.getBillDate());
-            billDb.setComment(bill.getComment());
-            
-            billRepository.save(billDb);
-            return true;
-        }
-
-    }
+  
+   
     
     @PostMapping("archive/{id}")
     public Boolean archiveUser(@PathVariable Integer id) {

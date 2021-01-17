@@ -20,4 +20,7 @@ public interface TimetableRepository extends JpaRepository<Timetable,Long> {
     @Query("SELECT t FROM Timetable t "  + "WHERE t.flatMember.flat.id = :id ORDER BY t.date DESC")
     List<Timetable> findTimetableByFlat(Integer id);
     
+//    @Query("SELECT t FROM Timetable t "  + "WHERE t.flatMember.flat.id = :id ORDER BY t.date DESC")
+//    List<Timetable> findTimetableByFlatAndMonth(Integer id, String month);
+    
 }
